@@ -1,13 +1,25 @@
 <script>
 	import Header from './Header.svelte';
 	import './styles.css';
+	import NotFound from '$lib/NotFound.svelte';
+
+	export let status;
+
+	const errorPages = {
+		404: NotFound
+	};
 </script>
 
 <div class="app">
 	<Header />
 
 	<main>
-		<slot />
+		{#if status in errorPages}
+			<!-- <svelte:component this={errorPages[status]} /> -->
+			 <p>oioi</p>
+		{:else}
+			<slot />
+		{/if}
 	</main>
 </div>
 

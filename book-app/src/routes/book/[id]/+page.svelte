@@ -6,16 +6,24 @@
 	let book;
 
 	async function getBookData() {
-		const response = await fetch(`http://localhost:5086/Book/${data.id}`, {
-			method: 'GET',
-			headers: {
-				'content-type': 'application/json'
+		try {
+			const response = await fetch(`http://localhost:5086/Book/${data.id}`, {
+				method: 'GET',
+				headers: {
+					'content-type': 'application/json'
+				}
+			});
+
+			if (!response.ok) {
+				throw new Error('Error:', 'response.status');
 			}
-		});
 
-		book = await response.json();
+			book = await response.json();
 
-		console.log(book);
+			console.log(book);
+		} catch (error) {
+			console.error('Error: ', error.message);
+		}
 	}
 
 	onMount(async () => {
@@ -24,7 +32,7 @@
 </script>
 
 <svelte:head>
-	<title>{book?.bookTitle ?? "Book details"}</title>
+	<title>{book?.bookTitle ?? 'Book details'}</title>
 	<meta name="description" content="Book details" />
 </svelte:head>
 
