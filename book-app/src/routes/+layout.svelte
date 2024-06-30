@@ -15,8 +15,7 @@
 
 	<main>
 		{#if status in errorPages}
-			<!-- <svelte:component this={errorPages[status]} /> -->
-			 <p>oioi</p>
+			<svelte:component this={errorPages[status]} />
 		{:else}
 			<slot />
 		{/if}
