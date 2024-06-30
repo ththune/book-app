@@ -1,6 +1,7 @@
 <script>
 	import { onMount } from 'svelte';
 	import { bookEditDetailsStore } from '$lib/bookEditDetailsStore';
+	import BackButton from '$lib/BackButton.svelte';
 
 	export let data;
 
@@ -39,6 +40,9 @@
 
 {#if book}
 	<h1>{book.bookTitle}</h1>
+
+	<BackButton />
+
 	<p>{book.bookIsbn}</p>
 	<p>{book.bookPublishedDate}</p>
 
