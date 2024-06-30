@@ -25,6 +25,7 @@
 	},
 	"type": "module",
 	"dependencies": {
-		"@fontsource/fira-mono": "^5.0.13"
+		"@fontsource/fira-mono": "^5.0.13",
+		"svelte-toast": "^1.0.0"
 	}
 }
