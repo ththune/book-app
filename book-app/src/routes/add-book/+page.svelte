@@ -1,5 +1,6 @@
 <script>
 	import { writable } from 'svelte/store';
+	import BackButton from '$lib/BackButton.svelte';
 
 	let title = '';
 	let isbn = '';
@@ -60,6 +61,8 @@
 </svelte:head>
 
 <h1>Add a new book</h1>
+
+<BackButton />
 
 <label for="title">Title</label>
 <input

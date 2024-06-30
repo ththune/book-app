@@ -39,9 +39,9 @@
 				throw new Error('Error:', 'response.status');
 			}
 
-			let res = await response.json();
-
-			console.log(res);
+			// Navigate back to the previous page after a succesful book deletion.
+			history.back();
+			
 		} catch (error) {
 			console.error('Error: ', error.message);
 		}
