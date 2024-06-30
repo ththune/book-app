@@ -41,7 +41,7 @@
 
 			// Navigate back to the previous page after a succesful book deletion.
 			history.back();
-			
+
 		} catch (error) {
 			console.error('Error: ', error.message);
 		}
@@ -80,8 +80,8 @@
 
 	<BackButton />
 
-	<p>{book.bookIsbn}</p>
-	<p>{book.bookPublishedDate}</p>
+	<p>ISBN {book.bookIsbn}</p>
+	<p>Published on {book.bookPublishedDate}</p>
 
 	{#if book.authors && book.authors.length > 0}
 		<p>Authored by</p>
