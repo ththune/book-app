@@ -31,6 +31,16 @@
 	onMount(async () => {
 		await getBookData();
 	});
+
+	function handleEditButton() {
+		bookEditDetailsStore.set({
+			id: book.bookId,
+			title: book.bookTitle,
+			isbn: book.bookIsbn,
+			publishedDate: book.bookPublishedDate,
+			authors: book.authors
+		});
+	}
 </script>
 
 <svelte:head>
@@ -53,17 +63,6 @@
 		{/each}
 	{/if}
 
-	<a
-		href="/edit-book"
-		on:click={() => {
-			bookEditDetailsStore.set({
-				id: book.bookId,
-				title: book.bookTitle,
-				isbn: book.bookIsbn,
-				publishedDate: book.bookPublishedDate,
-				authors: book.authors
-			});
-		}}>Edit book</a
-	>
+	<a href="/edit-book" on:click={handleEditButton}>Edit book</a>
 	<a on:click={() => {}} style="color: red">Delete book</a>
 {/if}
