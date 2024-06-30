@@ -47,4 +47,7 @@
 			<p>{author.authorFirstName} {author.authorLastName}</p>
 		{/each}
 	{/if}
+
+	<a href="/edit-book">Edit book</a>
+	<a on:click={() => {}} style="color: red">Delete book</a>
 {/if}
