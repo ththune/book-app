@@ -39,6 +39,15 @@
 			if (!response.ok) {
 				throw new Error(`Error:, ${response.status}`);
 			}
+
+			// Reset variables when a book has been successfully posted.
+			title = '';
+			isbn = '';
+			publishedDate = '';
+
+			authorFirstName = '';
+			authorLastName = '';
+			authors.set([]);
 		} catch (error) {
 			console.error(`Error: ${error.message}`);
 		}
