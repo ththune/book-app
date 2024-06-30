@@ -97,8 +97,4 @@
 	{/each}
 </ul>
 
-<!-- <p>{title}</p> -->
-<!-- <p>{isbn}</p> -->
-<!-- <p>{publishedDate}</p> -->
-
 <button type="submit" on:click={postBook}>Submit</button>
