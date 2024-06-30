@@ -1,5 +1,6 @@
 <script>
 	import { onMount } from 'svelte';
+	import { bookEditDetailsStore } from '$lib/bookEditDetailsStore';
 
 	export let data;
 
@@ -48,6 +49,17 @@
 		{/each}
 	{/if}
 
-	<a href="/edit-book">Edit book</a>
+	<a
+		href="/edit-book"
+		on:click={() => {
+			bookEditDetailsStore.set({
+				id: book.bookId,
+				title: book.bookTitle,
+				isbn: book.bookIsbn,
+				publishedDate: book.bookPublishedDate,
+				authors: book.authors
+			});
+		}}>Edit book</a
+	>
 	<a on:click={() => {}} style="color: red">Delete book</a>
 {/if}
