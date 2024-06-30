@@ -21,7 +21,7 @@
 	}
 
 	// POST the new book to the API.
-	async function postAuthor() {
+	async function postBook() {
 		const response = await fetch('http://localhost:5086/Book', {
 			method: 'POST',
 			headers: {
@@ -101,4 +101,4 @@
 <!-- <p>{isbn}</p> -->
 <!-- <p>{publishedDate}</p> -->
 
-<button type="submit" on:click={postAuthor}>Submit</button>
+<button type="submit" on:click={postBook}>Submit</button>
