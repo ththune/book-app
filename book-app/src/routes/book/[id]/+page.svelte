@@ -17,14 +17,12 @@
 			});
 
 			if (!response.ok) {
-				throw new Error('Error:', 'response.status');
+				throw new Error(`Error:, ${response.status}`);
 			}
 
 			book = await response.json();
-
-			console.log(book);
 		} catch (error) {
-			console.error('Error: ', error.message);
+			console.error(`Error: ${error.message}`);
 		}
 	}
 

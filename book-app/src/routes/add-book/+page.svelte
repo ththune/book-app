@@ -22,20 +22,26 @@
 
 	// POST the new book to the API.
 	async function postBook() {
-		const response = await fetch('http://localhost:5086/Book', {
-			method: 'POST',
-			headers: {
-				'content-type': 'application/json'
-			},
-			body: JSON.stringify({
-				bookTitle: title,
-				bookIsbn: isbn,
-				bookPublishedDate: publishedDate,
-				authors: $authors
-			})
-		});
+		try {
+			const response = await fetch('http://localhost:5086/Book', {
+				method: 'POST',
+				headers: {
+					'content-type': 'application/json'
+				},
+				body: JSON.stringify({
+					bookTitle: title,
+					bookIsbn: isbn,
+					bookPublishedDate: publishedDate,
+					authors: $authors
+				})
+			});
 
-		console.log(response.json());
+			if (!response.ok) {
+				throw new Error(`Error:, ${response.status}`);
+			}
+		} catch (error) {
+			console.error(`Error: ${error.message}`);
+		}
 	}
 </script>
 
