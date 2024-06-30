@@ -38,7 +38,6 @@
 
 			<a class="book" href="/book/{book.bookId}">
 				<div class="row">
-					<p>{book.bookId}</p>
 					<p>{book.bookTitle}</p>
 					<p>{book.bookIsbn}</p>
 					<p>{book.bookPublishedDate}</p>
