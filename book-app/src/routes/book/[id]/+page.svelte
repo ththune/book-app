@@ -23,7 +23,10 @@
 	});
 </script>
 
-<!-- <p>Book id page</p> -->
+<svelte:head>
+	<title>{book?.bookTitle ?? "Book details"}</title>
+	<meta name="description" content="Book details" />
+</svelte:head>
 
 {#if book}
 	<h1>{book.bookTitle}</h1>
