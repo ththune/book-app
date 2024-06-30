@@ -41,7 +41,6 @@
 
 			// Navigate back to the previous page after a succesful book deletion.
 			history.back();
-
 		} catch (error) {
 			console.error('Error: ', error.message);
 		}
@@ -84,12 +83,25 @@
 	<p>Published on {book.bookPublishedDate}</p>
 
 	{#if book.authors && book.authors.length > 0}
-		<p>Authored by</p>
-		{#each book.authors as author (author.authorId)}
-			<p>{author.authorFirstName} {author.authorLastName}</p>
-		{/each}
+		<div class="authors-row">
+			<p>
+				Authored by {book.authors
+					.map((author) => `${author.authorFirstName} ${author.authorLastName}`)
+					.join(', ')}
+			</p>
+		</div>
 	{/if}
 
 	<a href="/edit-book" on:click={handleEditButton}>Edit book</a>
 	<a on:click={handleDeleteButton} style="color: red">Delete book</a>
 {/if}
+
+<style>
+	.authors-row {
+		display: flex; /* Use flexbox to align items */
+		align-items: center; /* Center-align items vertically */
+	}
+	.authors-row p {
+		margin-right: 10px; /* Optional: Adds space between "Authored by" and authors */
+	}
+</style>
