@@ -7,7 +7,7 @@
 
 	let book;
 
-	async function getBookData() {
+	async function getBook() {
 		try {
 			const response = await fetch(`http://localhost:5086/Book/${data.id}`, {
 				method: 'GET',
@@ -28,8 +28,29 @@
 		}
 	}
 
+	async function deleteBook() {
+		try {
+			const response = await fetch(`http://localhost:5086/Book/${data.id}`, {
+				method: 'DELETE',
+				headers: {
+					'content-type': 'application/json'
+				}
+			});
+
+			if (!response.ok) {
+				throw new Error('Error:', 'response.status');
+			}
+
+			let res = await response.json();
+
+			console.log(res);
+		} catch (error) {
+			console.error('Error: ', error.message);
+		}
+	}
+
 	onMount(async () => {
-		await getBookData();
+		await getBook();
 	});
 
 	function handleEditButton() {
@@ -40,6 +61,14 @@
 			publishedDate: book.bookPublishedDate,
 			authors: book.authors
 		});
+	}
+
+	async function handleDeleteButton() {
+		let choice = confirm('Do you want to delete the book?');
+
+		if (choice) {
+			await deleteBook();
+		}
 	}
 </script>
 
@@ -64,5 +93,5 @@
 	{/if}
 
 	<a href="/edit-book" on:click={handleEditButton}>Edit book</a>
-	<a on:click={() => {}} style="color: red">Delete book</a>
+	<a on:click={handleDeleteButton} style="color: red">Delete book</a>
 {/if}
