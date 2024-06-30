@@ -36,7 +36,7 @@
 		{#each books as book (book.bookId)}
 			<!-- <a class="how-to-play" href="/sverdle/how-to-play">How to play</a> -->
 
-			<a class="how-to-play" href="/get-data/test-folder">
+			<a class="how-to-play" href="/book/{book.bookId}">
 				<div class="row">
 					<p>{book.bookId}</p>
 					<p>{book.bookTitle}</p>
