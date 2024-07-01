@@ -22,7 +22,12 @@
 	}
 
 	// POST the new book to the API.
-	async function postBook() {
+	async function postBookWithAuthors() {
+		// Check that input variables are provided before posting to the API.
+		if (title.length === 0) return;
+		if (isbn.length === 0) return;
+		if (publishedDate === 0) return;
+
 		try {
 			const response = await fetch('http://localhost:5086/Book', {
 				method: 'POST',
@@ -40,6 +45,8 @@
 			if (!response.ok) {
 				throw new Error(`Error:, ${response.status}`);
 			}
+
+			console.log(response.json());
 
 			// Reset variables when a book has been successfully posted.
 			title = '';
@@ -115,4 +122,4 @@
 	{/each}
 </ul>
 
-<button type="submit" on:click={postBook}>Submit</button>
+<button type="submit" on:click={postBookWithAuthors}>Submit</button>
