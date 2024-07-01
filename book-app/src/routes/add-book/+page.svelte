@@ -46,7 +46,6 @@
 			}
 
 			const data = await response.json();
-			const bookId = data.bookId;
 
 			if (data.bookId && $authors.length > 0) {
 				let authorsBody = [];
