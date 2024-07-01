@@ -47,7 +47,7 @@
 			// Navigate back to the previous page after a succesful book deletion.
 			history.back();
 		} catch (error) {
-			errorMessage = `Failed to delete ${book.bookTitle}`
+			errorMessage = `Failed to delete ${book.bookTitle}`;
 			console.error('Error: ', error.message);
 		}
 	}
@@ -73,6 +73,11 @@
 			await deleteBook();
 		}
 	}
+
+	function formatDate(dateString) {
+		const options = { year: 'numeric', month: 'long', day: 'numeric' };
+		return new Date(dateString).toLocaleDateString('en', options);
+	}
 </script>
 
 <svelte:head>
@@ -86,7 +91,7 @@
 	<BackButton />
 
 	<p>ISBN {book.bookIsbn}</p>
-	<p>Published on {book.bookPublishedDate}</p>
+	<p>Published on {formatDate(book.bookPublishedDate)}</p>
 
 	{#if book.authors && book.authors.length > 0}
 		<div class="authors-row">
