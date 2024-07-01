@@ -4,14 +4,17 @@
 	import { bookEditDetailsStore } from '$lib/bookEditDetailsStore';
 	import BackButton from '$lib/BackButton.svelte';
 
-    let id;
+	let id;
 	let title = '';
 	let isbn = '';
 	let publishedDate = '';
 
 	let authorFirstName = '';
 	let authorLastName = '';
+
+	let oldAuthors = [];
 	let authors = writable([]);
+	$: allAuthors = oldAuthors.concat($authors);
 
 	let bookEditDetails = {
 		title: '',
@@ -31,11 +34,12 @@
 
 	onMount(() => {
 		console.log('Editing book:', bookEditDetails);
-        id = bookEditDetails.id;
+		id = bookEditDetails.id;
 		title = bookEditDetails.title;
 		isbn = bookEditDetails.isbn;
 		publishedDate = bookEditDetails.publishedDate;
-        authors.set(bookEditDetails.authors);
+		oldAuthors = bookEditDetails.authors;
+		// authors.set(bookEditDetails.authors);
 	});
 
 	// Add a new author to the local authors writable.
@@ -50,7 +54,7 @@
 	}
 
 	// PUT the new book to the API.
-	async function putBook() {
+	async function putBookWithAuthors() {
 		const response = await fetch(`http://localhost:5086/Book/${id}`, {
 			method: 'PUT',
 			headers: {
@@ -59,12 +63,33 @@
 			body: JSON.stringify({
 				bookTitle: title,
 				bookIsbn: isbn,
-				bookPublishedDate: publishedDate,
-				authors: $authors
+				bookPublishedDate: publishedDate
 			})
 		});
 
-		console.log(response.json());
+		const data = await response.json();
+
+		if (data.bookId && $authors.length > 0) {
+			let authorsBody = [];
+			$authors.forEach((author, index) => {
+				authorsBody.push({
+					authorFirstName: author.authorFirstName,
+					authorLastName: author.authorLastName
+				});
+			});
+
+			const response = await fetch(`http://localhost:5086/Author/Book/${data.bookId}`, {
+				method: 'POST',
+				headers: {
+					'content-type': 'application/json'
+				},
+				body: JSON.stringify(authorsBody)
+			});
+
+			if (!response.ok) {
+				throw new Error(`Error:, ${response.status}`);
+			}
+		}
 	}
 </script>
 
@@ -123,7 +148,7 @@
 <button type="button" on:click={addAuthor}>Add author</button>
 
 <ul>
-	{#each $authors as author}
+	{#each allAuthors as author}
 		<li>{author.authorFirstName} {author.authorLastName}</li>
 	{/each}
 </ul>
@@ -132,4 +157,4 @@
 <!-- <p>{isbn}</p> -->
 <!-- <p>{publishedDate}</p> -->
 
-<button type="submit" on:click={putBook}>Submit</button>
+<button type="submit" on:click={putBookWithAuthors}>Submit</button>
