@@ -15,6 +15,11 @@
 		books = await response.json();
 	}
 
+	function formatDate(dateString) {
+		const options = { year: 'numeric', month: 'long', day: 'numeric' };
+		return new Date(dateString).toLocaleDateString('en', options);
+	}
+
 	onMount(async () => {
 		await getBooks();
 	});
@@ -36,13 +41,20 @@
 		{#each books as book (book.bookId)}
 			<!-- <a class="how-to-play" href="/sverdle/how-to-play">How to play</a> -->
 
-			<a class="book" href="/book/{book.bookId}">
-				<div class="row">
+			<div class="book-container">
+				<a href="/book/{book.bookId}">
+					<p class="book-title">{book.bookTitle}</p>
+					<!-- <p class="book-published">Published {book.bookPublishedDate}</p> -->
+					<p class="book-published">Published {formatDate(book.bookPublishedDate)}</p>
+					<p class="book-isbn">ISBN {book.bookIsbn}</p>
+				</a>
+			</div>
+
+			<!-- <div class="row">
 					<p>{book.bookTitle}</p>
 					<p>{book.bookIsbn}</p>
 					<p>{book.bookPublishedDate}</p>
-				</div>
-			</a>
+				</div> -->
 		{/each}
 	{/if}
 </div>
@@ -55,5 +67,32 @@
 
 	.row p {
 		margin: 0;
+	}
+
+	.book-container {
+		max-width: 600px; /* Maximum width of the container */
+		/* margin: 0 auto; Center the container horizontally */
+		margin-bottom: 10px;
+		padding: 20px;
+		border: 1px solid #ccc; /* Optional border for visibility */
+		background-color: #f9f9f9; /* Optional background color */
+		border-radius: 5px; /* Optional rounded corners */
+	}
+
+	.book-title {
+		font-size: 1.2em;
+		font-weight: bold;
+		margin-bottom: 10px;
+	}
+
+	.book-info-row {
+		display: flex;
+		justify-content: space-between;
+	}
+
+	.book-isbn,
+	.book-published {
+		font-size: 1em;
+		margin: 0; /* Remove default margin */
 	}
 </style>
