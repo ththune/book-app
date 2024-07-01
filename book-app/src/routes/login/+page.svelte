@@ -40,9 +40,3 @@
 {#if errorMessage}
 	<p class="error">{errorMessage}</p>
 {/if}
-
-<style>
-	.error {
-		color: red;
-	}
-</style>
