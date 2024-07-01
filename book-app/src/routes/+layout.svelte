@@ -7,12 +7,6 @@
 	import NotFound from '$lib/NotFound.svelte';
 	import { onMount } from 'svelte';
 
-	export let status;
-
-	const errorPages = {
-		404: NotFound
-	};
-
 	onMount(() => {
 		const loggedIn = sessionStorage.getItem('loggedIn');
 		if (!loggedIn) {
@@ -27,11 +21,7 @@
 	{/if}
 
 	<main>
-		{#if status in errorPages}
-			<svelte:component this={errorPages[status]} />
-		{:else}
-			<slot />
-		{/if}
+		<slot />
 	</main>
 </div>
 
