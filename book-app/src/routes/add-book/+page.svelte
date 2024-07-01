@@ -9,6 +9,7 @@
 	let isbn = '';
 	let publishedDate = '';
 
+	// let authorId = 0;
 	let authorFirstName = '';
 	let authorLastName = '';
 	let authors = writable([]);
@@ -20,6 +21,7 @@
 		}
 
 		authors.update((authors) => [...authors, { authorFirstName, authorLastName }]);
+		// authorId++;
 		authorFirstName = '';
 		authorLastName = '';
 	}
@@ -159,8 +161,29 @@
 <button type="button" on:click={addAuthor}>Add author</button>
 
 <ul>
-	{#each $authors as author}
-		<li>{author.authorFirstName} {author.authorLastName}</li>
+	{#each $authors as author, index}
+		<li>
+			{author.authorFirstName}
+			{author.authorLastName}
+			<button
+				on:click={() => {
+					if (index > -1) {
+						// Hacky solution for removing the selected element from authors,
+						// because splice(index, 1) does not work.
+						authors.update((authors) => {
+							let updatedAuthors = [];
+
+							authors.forEach((author, authorIndex) => {
+								if (authorIndex === index) return;
+								updatedAuthors.push(author);
+							});
+
+							return updatedAuthors;
+						});
+					}
+				}}>Remove</button
+			>
+		</li>
 	{/each}
 </ul>
 
@@ -171,4 +194,3 @@
 {:else if errorMessage}
 	<p class="error">{errorMessage}</p>
 {/if}
-
