@@ -4,6 +4,9 @@
 	import { bookEditDetailsStore } from '$lib/bookEditDetailsStore';
 	import BackButton from '$lib/BackButton.svelte';
 
+	let successMessage = '';
+	let errorMessage = '';
+
 	let id;
 	let title = '';
 	let isbn = '';
@@ -55,6 +58,26 @@
 
 	// PUT the new book to the API.
 	async function putBookWithAuthors() {
+		// Reset messages
+		successMessage = '';
+		errorMessage = '';
+
+		// Check that input variables are provided before posting to the API.
+		if (title.length === 0) {
+			errorMessage = 'Title is missing';
+			return;
+		}
+
+		if (isbn.length === 0) {
+			errorMessage = 'ISBN is missing';
+			return;
+		}
+
+		if (publishedDate.length === 0) {
+			errorMessage = 'Published Date is missing';
+			return;
+		}
+
 		const response = await fetch(`http://localhost:5086/Book/${id}`, {
 			method: 'PUT',
 			headers: {
@@ -66,6 +89,12 @@
 				bookPublishedDate: publishedDate
 			})
 		});
+
+		if (response.ok) {
+			successMessage = `${title} was updated!`;
+		} else {
+			throw new Error(`Error: ${response.status}`);
+		}
 
 		const data = await response.json();
 
@@ -102,7 +131,7 @@
 
 <BackButton />
 
-<label for="title">Title</label>
+<label for="title">Title*</label>
 <input
 	bind:value={title}
 	type="text"
@@ -111,7 +140,7 @@
 	title="Please enter the title of the book"
 />
 
-<label for="isbn">ISBN</label>
+<label for="isbn">ISBN*</label>
 <input
 	bind:value={isbn}
 	type="text"
@@ -121,7 +150,7 @@
 	title="Please enter a valid ISBN number (10 or 13 digits)"
 />
 
-<label for="publishedDate">Published Date</label>
+<label for="publishedDate">Published Date*</label>
 <input
 	bind:value={publishedDate}
 	type="text"
@@ -153,8 +182,10 @@
 	{/each}
 </ul>
 
-<!-- <p>{title}</p> -->
-<!-- <p>{isbn}</p> -->
-<!-- <p>{publishedDate}</p> -->
-
 <button type="submit" on:click={putBookWithAuthors}>Submit</button>
+
+{#if successMessage}
+	<p class="success">{successMessage}</p>
+{:else if errorMessage}
+	<p class="error">{errorMessage}</p>
+{/if}

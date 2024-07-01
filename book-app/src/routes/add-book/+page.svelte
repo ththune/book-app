@@ -62,7 +62,7 @@
 			if (response.ok) {
 				successMessage = `${title} was added!`;
 			} else {
-				throw new Error(`Error:, ${response.status}`);
+				throw new Error(`Error: ${response.status}`);
 			}
 
 			const data = await response.json();
@@ -113,7 +113,7 @@
 
 <BackButton />
 
-<label for="title">Title</label>
+<label for="title">Title*</label>
 <input
 	bind:value={title}
 	type="text"
@@ -122,7 +122,7 @@
 	title="Please enter the title of the book"
 />
 
-<label for="isbn">ISBN</label>
+<label for="isbn">ISBN*</label>
 <input
 	bind:value={isbn}
 	type="text"
@@ -132,7 +132,7 @@
 	title="Please enter a valid ISBN number (10 or 13 digits)"
 />
 
-<label for="publishedDate">Published Date</label>
+<label for="publishedDate">Published Date*</label>
 <input
 	bind:value={publishedDate}
 	type="text"
@@ -172,6 +172,3 @@
 	<p class="error">{errorMessage}</p>
 {/if}
 
-<!-- {#if errorMessage}
-	<p class="error">{errorMessage}</p>
-{/if} -->
