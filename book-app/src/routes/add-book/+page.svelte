@@ -2,8 +2,8 @@
 	import { writable } from 'svelte/store';
 	import BackButton from '$lib/BackButton.svelte';
 
-	let successMessage = '';
-	let errorMessage = 'asd01';
+	let successMessage = 'success';
+	let errorMessage = 'error';
 
 	let title = '';
 	let isbn = '';
@@ -148,6 +148,10 @@
 
 <button type="submit" on:click={postBookWithAuthors}>Submit</button>
 
-<!-- {#if errorMessage} -->
+{#if successMessage}
+	<p class="success">{successMessage}</p>
+{/if}
+
+{#if errorMessage}
 	<p class="error">{errorMessage}</p>
-<!-- {/if} -->
+{/if}
