@@ -5,6 +5,8 @@
 
 	export let data;
 
+	let errorMessage = '';
+
 	let book;
 
 	async function getBook() {
@@ -27,6 +29,9 @@
 	}
 
 	async function deleteBook() {
+		// Clear error message
+		errorMessage = '';
+
 		try {
 			const response = await fetch(`http://localhost:5086/Book/${data.id}`, {
 				method: 'DELETE',
@@ -42,6 +47,7 @@
 			// Navigate back to the previous page after a succesful book deletion.
 			history.back();
 		} catch (error) {
+			errorMessage = `Failed to delete ${book.bookTitle}`
 			console.error('Error: ', error.message);
 		}
 	}
@@ -94,6 +100,10 @@
 
 	<a href="/edit-book" on:click={handleEditButton}>Edit book</a>
 	<a on:click={handleDeleteButton} style="color: red">Delete book</a>
+{/if}
+
+{#if errorMessage}
+	<p class="error">{errorMessage}</p>
 {/if}
 
 <style>
