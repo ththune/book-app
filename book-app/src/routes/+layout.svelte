@@ -1,5 +1,6 @@
 <script>
 	import { goto } from '$app/navigation';
+	import { page } from '$app/stores';
 
 	import Header from './Header.svelte';
 	import './styles.css';
@@ -21,7 +22,9 @@
 </script>
 
 <div class="app">
-	<Header />
+	{#if $page.url.pathname !== '/login'}
+		<Header />
+	{/if}
 
 	<main>
 		{#if status in errorPages}
