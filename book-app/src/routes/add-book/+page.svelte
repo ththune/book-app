@@ -2,8 +2,8 @@
 	import { writable } from 'svelte/store';
 	import BackButton from '$lib/BackButton.svelte';
 
-	let successMessage = 'success';
-	let errorMessage = 'error';
+	let successMessage = '';
+	let errorMessage = '';
 
 	let title = '';
 	let isbn = '';
@@ -26,10 +26,25 @@
 
 	// POST the new book to the API.
 	async function postBookWithAuthors() {
+		// Reset messages
+		successMessage = '';
+		errorMessage = '';
+
 		// Check that input variables are provided before posting to the API.
-		if (title.length === 0) return;
-		if (isbn.length === 0) return;
-		if (publishedDate === 0) return;
+		if (title.length === 0) {
+			errorMessage = 'Title is missing';
+			return;
+		}
+
+		if (isbn.length === 0) {
+			errorMessage = 'ISBN is missing';
+			return;
+		}
+
+		if (publishedDate.length === 0) {
+			errorMessage = 'Published Date is missing';
+			return;
+		}
 
 		try {
 			const response = await fetch('http://localhost:5086/Book', {
@@ -44,7 +59,9 @@
 				})
 			});
 
-			if (!response.ok) {
+			if (response.ok) {
+				successMessage = `${title} was added!`;
+			} else {
 				throw new Error(`Error:, ${response.status}`);
 			}
 
@@ -81,6 +98,7 @@
 			authorLastName = '';
 			authors.set([]);
 		} catch (error) {
+			errorMessage = 'Failed to add new book';
 			console.error(`Error: ${error.message}`);
 		}
 	}
@@ -150,8 +168,10 @@
 
 {#if successMessage}
 	<p class="success">{successMessage}</p>
-{/if}
-
-{#if errorMessage}
+{:else if errorMessage}
 	<p class="error">{errorMessage}</p>
 {/if}
+
+<!-- {#if errorMessage}
+	<p class="error">{errorMessage}</p>
+{/if} -->
