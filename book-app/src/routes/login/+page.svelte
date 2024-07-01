@@ -33,11 +33,13 @@
 		<label for="password">Password:</label>
 		<input type="password" id="password" bind:value={password} required />
 	</div>
-	{#if errorMessage}
-		<p class="error">{errorMessage}</p>
-	{/if}
+
 	<button type="submit">Login</button>
 </form>
+
+{#if errorMessage}
+	<p class="error">{errorMessage}</p>
+{/if}
 
 <style>
 	.error {
