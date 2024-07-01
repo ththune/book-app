@@ -37,8 +37,7 @@
 				body: JSON.stringify({
 					bookTitle: title,
 					bookIsbn: isbn,
-					bookPublishedDate: publishedDate,
-					authors: $authors
+					bookPublishedDate: publishedDate
 				})
 			});
 
@@ -46,7 +45,30 @@
 				throw new Error(`Error:, ${response.status}`);
 			}
 
-			console.log(response.json());
+			const data = await response.json();
+			const bookId = data.bookId;
+
+			if (data.bookId && $authors.length > 0) {
+				let authorsBody = [];
+				$authors.forEach((author, index) => {
+					authorsBody.push({
+						authorFirstName: author.authorFirstName,
+						authorLastName: author.authorLastName
+					});
+				});
+
+				const response = await fetch(`http://localhost:5086/Author/Book/${data.bookId}`, {
+					method: 'POST',
+					headers: {
+						'content-type': 'application/json'
+					},
+					body: JSON.stringify(authorsBody)
+				});
+
+				if (!response.ok) {
+					throw new Error(`Error:, ${response.status}`);
+				}
+			}
 
 			// Reset variables when a book has been successfully posted.
 			title = '';
