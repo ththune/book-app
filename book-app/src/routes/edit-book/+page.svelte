@@ -189,3 +189,9 @@
 {:else if errorMessage}
 	<p class="error">{errorMessage}</p>
 {/if}
+
+<style>
+	label {
+		margin-top: 10px;
+	}
+</style>
