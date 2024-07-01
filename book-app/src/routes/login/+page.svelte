@@ -16,7 +16,6 @@
 		});
 
 		if (response.ok) {
-			// window.location.href = '/dashboard';
 			sessionStorage.setItem('loggedIn', true);
 			goto('/');
 		} else {
