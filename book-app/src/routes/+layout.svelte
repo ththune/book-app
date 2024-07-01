@@ -1,13 +1,23 @@
 <script>
+	import { goto } from '$app/navigation';
+
 	import Header from './Header.svelte';
 	import './styles.css';
 	import NotFound from '$lib/NotFound.svelte';
+	import { onMount } from 'svelte';
 
 	export let status;
 
 	const errorPages = {
 		404: NotFound
 	};
+
+	onMount(() => {
+		const loggedIn = sessionStorage.getItem('loggedIn');
+		if (!loggedIn) {
+			goto('/login');
+		}
+	});
 </script>
 
 <div class="app">
