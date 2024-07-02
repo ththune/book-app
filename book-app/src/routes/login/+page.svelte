@@ -15,11 +15,16 @@
 			body: JSON.stringify({ username: username, password: password })
 		});
 
-		if (response.ok) {
+		if (!response.ok) {
+			errorMessage = 'Login failed';
+			return;
+		}
+
+		let data = await response.json();
+		
+		if (data.signedIn) {
 			sessionStorage.setItem('loggedIn', true);
 			goto('/');
-		} else {
-			errorMessage = 'Login failed';
 		}
 	}
 </script>
