@@ -37,7 +37,6 @@
 	}
 </script>
 
-<p>prod?</p>
 <div class="container">
 	<form class="center-form" on:submit={login}>
 		<div>
